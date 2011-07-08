@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<macromedia-extension
+  name="Citrus Engine Panels"
+  version="0.1"
+  type="flashpanel"
+  requires-restart="true">
+ <author name="Aymeric Lamboley" />
+ <products>
+   <product name="Flash" version="10" primary="true" />
+ </products>
+ <description>
+ <![CDATA[
+A flash extension to create easily Citrus Engine objects.
+ ]]>
+ </description>
+ <ui-access>
+ <![CDATA[
+ Access the panel by selecting 'Window > Other Panels > CitrusEnginePanels'.
+ ]]>
+ </ui-access>
+
+ <license-agreement>
+ <![CDATA[
+ ]]>
+ </license-agreement>
+ <files>
+ <file source="CitrusEnginePanels.swf" destination="$flash/WindowSWF" />
+ <file source="CitrusEnginePanels.jsfl" destination="$flash/Commands" />
+ </files>
+</macromedia-extension>
