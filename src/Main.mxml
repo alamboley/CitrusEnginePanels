@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	backgroundColor="#D6D6D6" styleName="flashPanelStyle"
+	paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0"
+	width="200" height="500" resize="_resize(event)"
+	applicationComplete="_applicationComplete(event)">
+
+	<mx:Script>
+		<![CDATA[
+
+			import adobe.utils.MMExecute;
+
+			import mx.controls.ToolTip;
+			import mx.core.FlexGlobals;
+
+			import flash.events.Event;
+
+			private function _addObjects(evt:Event):void {
+
+				switch(evt.target) {
+
+					case addBackground:
+						MMExecute("fl.runScript(fl.configURI + 'WindowSWF/CitrusEnginePanels.jsfl', 'addBackground','" + path.text.toString() + "');");
+						break;
+				}
+
+				path.text = "";
+			}
+
+			private function _createFrames(evt:Event):void {
+
+				switch(evt.target) {
+
+					case createHero:
+						MMExecute("fl.runScript(fl.configURI + 'WindowSWF/CitrusEnginePanels.jsfl', 'createHero');");
+						break;
+
+					case createBaddy:
+						MMExecute("fl.runScript(fl.configURI + 'WindowSWF/CitrusEnginePanels.jsfl', 'createBaddy');");
+						break;
+
+				}
+			}
+
+			private function _applicationComplete(evt:Event):void {
+				resizeToolTip();
+			}
+
+			private function _resize(evt:Event):void {
+				resizeToolTip();
+			}
+
+			private function resizeToolTip():void {
+				ToolTip.maxWidth = Math.min(FlexGlobals.topLevelApplication.width, ToolTip.maxWidth);
+			}
+		]]>
+	</mx:Script>
+
+	<mx:TabNavigator width="100%" height="100%" id="tabNavi"
+		backgroundColor="#D6D6D6" paddingBottom="5" paddingLeft="5"
+		paddingRight="5" paddingTop="5" borderStyle="none">
+
+		<mx:Canvas label="Add objects" id="addObjects" width="100%"
+			height="100%" toolTip="Click only one time on each object. It is added to your library.">
+			<mx:VBox width="100%" height="100%">
+
+				<mx:Button id="addBackground" width="100%" click="_addObjects(event)"
+					label="Add background" toolTip="Add a background to your level"/>
+
+				<mx:HBox width="100%">
+					<mx:Label width="20%" text="path ?"/>
+					<mx:TextInput width="50%" id="path" toolTip="Enter the path of your file"/>
+				</mx:HBox>
+
+			</mx:VBox>
+		</mx:Canvas>
+
+		<mx:Canvas label="Create frames" id="createFrames" width="100%"
+			height="100%" toolTip="Create frames for your Hero, Baddy...">
+			<mx:VBox width="100%">
+
+				<mx:Button id="createHero" width="100%" click="_createFrames(event)"
+					label="Create Hero" toolTip=""/>
+
+				<mx:Button id="createBaddy" width="100%" click="_createFrames(event)"
+					label="Create Baddy" toolTip=""/>
+			</mx:VBox>
+		</mx:Canvas>
+	</mx:TabNavigator>
+
+</mx:Application>
