@@ -2,7 +2,7 @@
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
 	backgroundColor="#D6D6D6" styleName="flashPanelStyle"
 	paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0"
-	width="200" height="500" resize="_resize(event)"
+	width="200" height="300" resize="_resize(event)"
 	applicationComplete="_applicationComplete(event)">
 
 	<mx:Script>
@@ -10,32 +10,90 @@
 
 			import adobe.utils.MMExecute;
 
+			import mx.controls.Alert;
 			import mx.controls.ToolTip;
 			import mx.core.FlexGlobals;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
 
 			import flash.events.Event;
-
 
 			private function _addObjects(evt:Event):void {
 
 				switch(evt.target) {
 
 					case addHero:
-						MMExecute("fl.runScript(fl.configURI + 'WindowSWF/CitrusEnginePanels.jsfl', 'addHero','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addHero','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
+						break;
+
+					case addBaddy:
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addBaddy','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
+						break;
+
+					case addCoin:
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addCoin','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
+						break;
+
+					case addPlatform:
+						Alert.show("Your hero can jump through ?", "One way platform ?", Alert.YES | Alert.NO, this, _addSpecifiedPlatform);
 						break;
 						
-					case addBaddy:
-						MMExecute("fl.runScript(fl.configURI + 'WindowSWF/CitrusEnginePanels.jsfl', 'addBaddy','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
+					case addSensor:
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addSensor','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
 						break;
-
+						
 					case addBackground:
-						MMExecute("fl.runScript(fl.configURI + 'WindowSWF/CitrusEnginePanels.jsfl', 'addBackground','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addBackground','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
+						break;
+						
+					case addCloud:
+					
+						var popUp:CloudPopUp = new CloudPopUp();
+						PopUpManager.addPopUp(popUp, this, true);
+						PopUpManager.centerPopUp(popUp);
+						popUp.addEventListener(Event.COMPLETE, _addCloud);
 						break;
 				}
+				
+				if (evt.target != addPlatform && evt.target != addCloud) {
+					_initFields();
+				}
+			}
 
+			private function _initFields():void {
 				path.text = "";
 				orignalClassname.selected = true;
 				_originalClassname();
+			}
+
+			private function _addSpecifiedPlatform(cEvt:CloseEvent):void {
+
+				if (cEvt.detail == Alert.YES) {
+					MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addPlatform','" + path.text.toString() + "', '" + newClassname.text.toString() + "', 'OneWayPlatform');");
+				} else {
+					MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addPlatform','" + path.text.toString() + "', '" + newClassname.text.toString() + "', 'Platform');");
+				}
+
+				_initFields();
+			}
+			
+			private function _addCloud(evt:Event):void {
+				
+				evt.target.removeEventListener(Event.COMPLETE, _addCloud);
+				
+				MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addCloud','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + evt.target.parallax.text.toString() + "');");
+				
+				_initFields();
+			}
+			
+			private function _originalClassname(evt:Event = null):void {
+
+				if (orignalClassname.selected == true) {
+					newClassname.visible = newLabelClassname.visible = false;
+					newClassname.text = "";
+				} else {
+					newClassname.visible = newLabelClassname.visible = true;
+				}
 			}
 
 			private function _createFrames(evt:Event):void {
@@ -43,28 +101,16 @@
 				switch(evt.target) {
 
 					case createHero:
-						MMExecute("fl.runScript(fl.configURI + 'WindowSWF/CitrusEnginePanels.jsfl', 'createHero');");
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'createHero');");
 						break;
 
 					case createBaddy:
-						MMExecute("fl.runScript(fl.configURI + 'WindowSWF/CitrusEnginePanels.jsfl', 'createBaddy');");
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'createBaddy');");
 						break;
 
 					case createMissile:
-						MMExecute("fl.runScript(fl.configURI + 'WindowSWF/CitrusEnginePanels.jsfl', 'createMissile');");
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'createMissile');");
 						break;
-				}
-			}
-			
-			private function _originalClassname(evt:Event = null):void {
-				
-				trace(orignalClassname.selected);
-				
-				if (orignalClassname.selected == true) {
-					newClassname.visible = newLabelClassname.visible = false;
-					newClassname.text = "";
-				} else {
-					newClassname.visible = newLabelClassname.visible = true;
 				}
 			}
 
@@ -79,7 +125,6 @@
 			private function resizeToolTip():void {
 				ToolTip.maxWidth = Math.min(FlexGlobals.topLevelApplication.width, ToolTip.maxWidth);
 			}
-
 		]]>
 	</mx:Script>
 
@@ -93,12 +138,24 @@
 
 				<mx:Button id="addHero" width="100%" click="_addObjects(event)"
 					label="Add hero" toolTip="Add a hero to your level"/>
-					
+
 				<mx:Button id="addBaddy" width="100%" click="_addObjects(event)"
 					label="Add baddy" toolTip="Add a baddy to your level"/>
 
+				<mx:Button id="addCoin" width="100%" click="_addObjects(event)"
+					label="Add coin" toolTip="Add a coin to your level"/>
+
+				<mx:Button id="addPlatform" width="100%" click="_addObjects(event)"
+					label="Add platform" toolTip="Add a platform to your level"/>
+
+				<mx:Button id="addSensor" width="100%" click="_addObjects(event)"
+					label="Add sensor" toolTip="Add a sensor to your level"/>
+
 				<mx:Button id="addBackground" width="100%" click="_addObjects(event)"
 					label="Add background" toolTip="Add a background to your level"/>
+					
+				<mx:Button id="addCloud" width="100%" click="_addObjects(event)"
+					label="Add cloud" toolTip="Add a cloud to your level"/>	
 
 				<mx:HBox width="100%">
 					<mx:Label width="20%" text="filepath ?"/>
@@ -106,11 +163,16 @@
 				</mx:HBox>
 				<mx:HBox width="100%">
 					<mx:Label width="20%" text="original classname ?"/>
-					<mx:CheckBox id="orignalClassname" width="50%" toolTip="Unselect if you use a custom class" selected="true" click="_originalClassname(event)"/>
+					<mx:CheckBox id="orignalClassname" width="50%"
+						toolTip="Unselect if you use a custom class"
+						selected="true" click="_originalClassname(event)"/>
 				</mx:HBox>
 				<mx:HBox width="100%">
-					<mx:Label id="newLabelClassname" width="20%" text="new classname :" visible="false"/>
-					<mx:TextInput id="newClassname" width="50%" toolTip="Enter the classname of your object" visible="false"/>
+					<mx:Label id="newLabelClassname" width="20%" text="new classname :"
+						visible="false"/>
+					<mx:TextInput id="newClassname" width="50%"
+						toolTip="Enter the classname of your object"
+						visible="false"/>
 				</mx:HBox>
 
 			</mx:VBox>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+	width="200" height="100" title="Using parallax ?" horizontalAlign="center">
+
+	<mx:Script>
+		<![CDATA[
+
+			import mx.core.IFlexDisplayObject;
+			import mx.managers.PopUpManager;
+
+			private function _valid(e:Event):void {
+				
+				this.dispatchEvent(new Event(Event.COMPLETE));
+				
+				PopUpManager.removePopUp(this as IFlexDisplayObject);
+			}
+		]]>
+	</mx:Script>
+
+	<mx:HBox width="100%">
+		<mx:TextInput width="50%" id="parallax" restrict="0-9." toolTip="The strength of the parallax between 0 and 2. Let empty for 0."/>
+		<mx:Button id="valid" width="50%" click="_valid(event)" label="Ok"/>
+	</mx:HBox>
+
+</mx:TitleWindow>
