@@ -2,7 +2,7 @@
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
 	backgroundColor="#D6D6D6" styleName="flashPanelStyle"
 	paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0"
-	width="200" height="300" resize="_resize(event)"
+	width="230" height="300" resize="_resize(event)"
 	applicationComplete="_applicationComplete(event)">
 
 	<mx:Script>
@@ -38,8 +38,16 @@
 						Alert.show("Your hero can jump through ?", "One way platform ?", Alert.YES | Alert.NO, this, _addSpecifiedPlatform);
 						break;
 						
+					case addMovingPlatform:
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addMovingPlatform','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
+						break;
+						
 					case addSensor:
 						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addSensor','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
+						break;
+						
+					case addPhysicObject:
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addPhysicObject','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
 						break;
 						
 					case addBackground:
@@ -135,27 +143,44 @@
 		<mx:Canvas label="Add objects" id="addObjects" width="100%"
 			height="100%" toolTip="Click only one time on each object. It is added to your library.">
 			<mx:VBox width="100%" height="100%">
-
-				<mx:Button id="addHero" width="100%" click="_addObjects(event)"
-					label="Add hero" toolTip="Add a hero to your level"/>
-
-				<mx:Button id="addBaddy" width="100%" click="_addObjects(event)"
-					label="Add baddy" toolTip="Add a baddy to your level"/>
-
-				<mx:Button id="addCoin" width="100%" click="_addObjects(event)"
-					label="Add coin" toolTip="Add a coin to your level"/>
-
-				<mx:Button id="addPlatform" width="100%" click="_addObjects(event)"
-					label="Add platform" toolTip="Add a platform to your level"/>
-
-				<mx:Button id="addSensor" width="100%" click="_addObjects(event)"
-					label="Add sensor" toolTip="Add a sensor to your level"/>
-
-				<mx:Button id="addBackground" width="100%" click="_addObjects(event)"
-					label="Add background" toolTip="Add a background to your level"/>
+			
+				<mx:HBox width="100%">
+					<mx:Button id="addHero" width="50%" click="_addObjects(event)"
+						label="Hero" toolTip="Add a hero to your level"/>
+	
+					<mx:Button id="addBaddy" width="50%" click="_addObjects(event)"
+					label="Baddy" toolTip="Add a baddy to your level"/>
+				</mx:HBox>
 					
-				<mx:Button id="addCloud" width="100%" click="_addObjects(event)"
-					label="Add cloud" toolTip="Add a cloud to your level"/>	
+				<mx:HBox width="100%">
+					<mx:Button id="addPlatform" width="50%" click="_addObjects(event)"
+						label="Platform" toolTip="Add a platform to your level"/>
+						
+					<mx:Button id="addMovingPlatform" width="50%" click="_addObjects(event)"
+						label="Moving platform" toolTip="Add a moving platform to your level"/>
+	
+				</mx:HBox>
+				
+				<mx:HBox width="100%">
+					<mx:Button id="addSensor" width="50%" click="_addObjects(event)"
+						label="Sensor" toolTip="Add a sensor to your level"/>
+						
+					<mx:Button id="addPhysicObject" width="50%" click="_addObjects(event)"
+						label="Physic object" toolTip="Add a physic object to your level"/>
+						
+				</mx:HBox>
+				
+				<mx:HBox width="100%">	
+					<mx:Button id="addCloud" width="50%" click="_addObjects(event)"
+						label="Cloud" toolTip="Add a cloud to your level"/>	
+						
+					
+					<mx:Button id="addCoin" width="50%" click="_addObjects(event)"
+						label="Coin" toolTip="Add a coin to your level"/>
+				</mx:HBox>
+				
+				<mx:Button id="addBackground" width="100%" click="_addObjects(event)"
+					label="Background" toolTip="Add a background to your level"/>
 
 				<mx:HBox width="100%">
 					<mx:Label width="20%" text="filepath ?"/>
@@ -183,13 +208,13 @@
 			<mx:VBox width="100%">
 
 				<mx:Button id="createHero" width="100%" click="_createFrames(event)"
-					label="Create Hero" toolTip=""/>
+					label="Hero" toolTip="Add labels and actions for your hero"/>
 
 				<mx:Button id="createBaddy" width="100%" click="_createFrames(event)"
-					label="Create Baddy" toolTip=""/>
+					label="Baddy" toolTip="Add labels and actions for your baddy"/>
 
 				<mx:Button id="createMissile" width="100%" click="_createFrames(event)"
-					label="Create Missile" toolTip=""/>
+					label="Missile" toolTip="Add labels and actions for your missile"/>
 
 			</mx:VBox>
 		</mx:Canvas>
