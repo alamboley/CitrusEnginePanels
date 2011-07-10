@@ -171,7 +171,7 @@
 					<mx:Label id="newLabelClassname" width="20%" text="new classname :"
 						visible="false"/>
 					<mx:TextInput id="newClassname" width="50%"
-						toolTip="Enter the classname of your object"
+						toolTip="Enter the classpath and name of your object"
 						visible="false"/>
 				</mx:HBox>
 
