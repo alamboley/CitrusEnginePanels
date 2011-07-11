@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+	width="200" height="120" title="Moving platform options :" horizontalAlign="center">
+
+	<mx:Script>
+		<![CDATA[
+
+			import mx.core.IFlexDisplayObject;
+			import mx.managers.PopUpManager;
+
+			private function _valid(e:Event):void {
+				
+				this.dispatchEvent(new Event(Event.COMPLETE));
+				
+				PopUpManager.removePopUp(this as IFlexDisplayObject);
+			}
+		]]>
+	</mx:Script>
+
+	<mx:HBox width="100%">
+		<mx:Label width="75%" text="wait for passenger ?"/>
+		<mx:CheckBox id="waitForPassenger" width="25%"
+			toolTip="tick wait for passenger for the platform moving only on contact"
+			selected="false"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label width="75%" text="one way ?"/>
+		<mx:CheckBox id="oneWay" width="25%"
+			toolTip="tick one way and your hero can jump through"
+			selected="false"/>
+	</mx:HBox>
+	
+	<mx:Button id="valid" width="50%" click="_valid(event)" label="Ok"/>
+
+</mx:TitleWindow>
