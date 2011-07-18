@@ -27,7 +27,7 @@
 				switch(evt.target) {
 
 					case addHero:
-						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addHero','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addHero','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "');");
 						break;
 
 					case addBaddy:
@@ -39,7 +39,7 @@
 						break;
 
 					case addCoin:
-						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addCoin','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addCoin','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "');");
 						break;
 
 					case addPlatform:
@@ -55,15 +55,15 @@
 						break;
 						
 					case addSensor:
-						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addSensor','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addSensor','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "');");
 						break;
 						
 					case addPhysicObject:
-						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addPhysicObject','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addPhysicObject','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "');");
 						break;
 						
 					case addBackground:
-						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addBackground','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addBackground','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "');");
 						break;
 						
 					case addCloud:
@@ -83,15 +83,16 @@
 			private function _initFields():void {
 				path.text = "";
 				orignalClassname.selected = true;
+				instanceName.text = "";
 				_originalClassname();
 			}
 
 			private function _addSpecifiedPlatform(cEvt:CloseEvent):void {
 
 				if (cEvt.detail == Alert.YES) {
-					MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addPlatform','" + path.text.toString() + "', '" + newClassname.text.toString() + "', 'OneWayPlatform');");
+					MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addPlatform','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "', 'OneWayPlatform');");
 				} else {
-					MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addPlatform','" + path.text.toString() + "', '" + newClassname.text.toString() + "', 'Platform');");
+					MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addPlatform','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "', 'Platform');");
 				}
 
 				_initFields();
@@ -101,7 +102,7 @@
 				
 				evt.target.removeEventListener(Event.COMPLETE, _addMovingPlatform);
 				
-				MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addMovingPlatform','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + evt.target.waitForPassenger.selected.toString() + "', '" + evt.target.oneWay.selected.toString() + "');");
+				MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addMovingPlatform','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "', '" + evt.target.waitForPassenger.selected.toString() + "', '" + evt.target.oneWay.selected.toString() + "');");
 				
 				_initFields();
 			}
@@ -110,7 +111,7 @@
 				
 				evt.target.removeEventListener(Event.COMPLETE, _addCloud);
 				
-				MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addCloud','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + evt.target.parallax.text.toString() + "');");
+				MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addCloud','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "', '" + evt.target.parallax.text.toString() + "');");
 				
 				_initFields();
 			}
@@ -119,7 +120,7 @@
 				
 				evt.target.removeEventListener(Event.COMPLETE, _addBaddy);
 				
-				MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addBaddy','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + evt.target.speed.text.toString() + "', '" + evt.target.startingDirection.selected.toString() + "');");
+				MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addBaddy','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "', '" + evt.target.speed.text.toString() + "', '" + evt.target.startingDirection.selected.toString() + "');");
 				
 				_initFields();
 			}
@@ -213,21 +214,25 @@
 					label="Background" toolTip="Add a background to your level"/>
 
 				<mx:HBox width="100%">
-					<mx:Label width="20%" text="filepath ?"/>
-					<mx:TextInput width="50%" id="path" toolTip="Enter the path of your file. It can be a blank."/>
+					<mx:Label width="30%" text="filepath ?"/>
+					<mx:TextInput width="70%" id="path" toolTip="Enter the path of your file. It can be a blank."/>
 				</mx:HBox>
 				<mx:HBox width="100%">
-					<mx:Label width="20%" text="original classname ?"/>
-					<mx:CheckBox id="orignalClassname" width="50%"
+					<mx:Label width="30%" text="original classname ?"/>
+					<mx:CheckBox id="orignalClassname" width="70%"
 						toolTip="Unselect if you use a custom class"
 						selected="true" click="_originalClassname(event)"/>
 				</mx:HBox>
 				<mx:HBox width="100%">
-					<mx:Label id="newLabelClassname" width="20%" text="new classname :"
+					<mx:Label id="newLabelClassname" width="30%" text="new classname :"
 						visible="false"/>
-					<mx:TextInput id="newClassname" width="50%"
+					<mx:TextInput id="newClassname" width="70%"
 						toolTip="Enter the classpath and name of your object"
 						visible="false"/>
+				</mx:HBox>
+				<mx:HBox width="100%">
+					<mx:Label width="30%" text="instance name :"/>
+					<mx:TextInput id="instanceName" width="70%" toolTip="Enter the instance name of your object"/>
 				</mx:HBox>
 
 			</mx:VBox>

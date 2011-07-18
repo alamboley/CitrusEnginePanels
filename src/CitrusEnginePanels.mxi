@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <macromedia-extension
   name="Citrus Engine Panels"
-  version="0.1.1"
+  version="0.2.0"
   type="flashpanel"
   requires-restart="true">
  <author name="Aymeric Lamboley" />
