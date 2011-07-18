@@ -10,6 +10,10 @@
 
 			import adobe.utils.MMExecute;
 
+			import popups.BaddyPopUp;
+			import popups.CloudPopUp;
+			import popups.MovingPlatformPopUp;
+
 			import mx.controls.Alert;
 			import mx.controls.ToolTip;
 			import mx.core.FlexGlobals;
@@ -27,7 +31,11 @@
 						break;
 
 					case addBaddy:
-						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addBaddy','" + path.text.toString() + "', '" + newClassname.text.toString() + "');");
+						
+						var badPopUp:BaddyPopUp = new BaddyPopUp();
+						PopUpManager.addPopUp(badPopUp, this, true);
+						PopUpManager.centerPopUp(badPopUp);
+						badPopUp.addEventListener(Event.COMPLETE, _addBaddy);
 						break;
 
 					case addCoin:
@@ -67,7 +75,7 @@
 						break;
 				}
 				
-				if (evt.target != addPlatform && evt.target != addCloud && evt.target != addMovingPlatform) {
+				if (evt.target != addBaddy && evt.target != addPlatform && evt.target != addCloud && evt.target != addMovingPlatform) {
 					_initFields();
 				}
 			}
@@ -103,6 +111,15 @@
 				evt.target.removeEventListener(Event.COMPLETE, _addCloud);
 				
 				MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addCloud','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + evt.target.parallax.text.toString() + "');");
+				
+				_initFields();
+			}
+			
+			private function _addBaddy(evt:Event):void {
+				
+				evt.target.removeEventListener(Event.COMPLETE, _addBaddy);
+				
+				MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addBaddy','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + evt.target.speed.text.toString() + "', '" + evt.target.startingDirection.selected.toString() + "');");
 				
 				_initFields();
 			}

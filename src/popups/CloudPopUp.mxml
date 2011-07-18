@@ -8,6 +8,8 @@
 			import mx.core.IFlexDisplayObject;
 			import mx.managers.PopUpManager;
 
+			import flash.events.Event;
+
 			private function _valid(e:Event):void {
 				
 				this.dispatchEvent(new Event(Event.COMPLETE));
