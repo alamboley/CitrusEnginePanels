@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+	width="200" height="175" title="Cannon options :" horizontalAlign="center">
+
+	<mx:Script>
+		<![CDATA[
+
+			import mx.core.IFlexDisplayObject;
+			import mx.managers.PopUpManager;
+
+			import flash.events.Event;
+
+			private function _valid(e:Event):void {
+				
+				this.dispatchEvent(new Event(Event.COMPLETE));
+				
+				PopUpManager.removePopUp(this as IFlexDisplayObject);
+			}
+		]]>
+	</mx:Script>
+
+	<mx:HBox width="100%">
+		<mx:Label width="50%" text="fire rate :"/>
+		<mx:TextInput id="fireRate" text="2000" width="50%" restrict="0-9" toolTip="the cannon fire rate in ms"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label width="75%" text="cannon fires on right side ?"/>
+		<mx:CheckBox id="startingDirection" width="25%"
+			toolTip="untick if cannon fires on left side"
+			selected="true"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label width="50%" text="missile view ?"/>
+		<mx:TextInput id="missileView" text="" width="50%"/>
+	</mx:HBox>
+	
+	<mx:Button id="valid" width="50%" click="_valid(event)" label="Ok"/>
+
+</mx:TitleWindow>

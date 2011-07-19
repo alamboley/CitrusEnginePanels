@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+	width="200" height="150" title="Teleporter options :" horizontalAlign="center">
+
+	<mx:Script>
+		<![CDATA[
+
+			import mx.core.IFlexDisplayObject;
+			import mx.managers.PopUpManager;
+
+			import flash.events.Event;
+
+			private function _valid(e:Event):void {
+				
+				this.dispatchEvent(new Event(Event.COMPLETE));
+				
+				PopUpManager.removePopUp(this as IFlexDisplayObject);
+			}
+		]]>
+	</mx:Script>
+
+	<mx:HBox width="100%">
+		<mx:Label width="50%" text="endX :"/>
+		<mx:TextInput id="endX" text="0" width="50%" restrict="0-9.\-" toolTip="X destination"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label width="50%" text="endY :"/>
+		<mx:TextInput id="endY" text="0" width="50%" restrict="0-9.\-" toolTip="Y destination"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label width="50%" text="waiting time :"/>
+		<mx:TextInput id="waitingTime" text="0" width="50%" restrict="0-9" toolTip="How many time before teleporting(ms) ?"/>
+	</mx:HBox>
+	
+	<mx:Button id="valid" width="50%" click="_valid(event)" label="Ok"/>
+
+</mx:TitleWindow>

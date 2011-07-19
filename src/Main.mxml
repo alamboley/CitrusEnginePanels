@@ -11,8 +11,12 @@
 			import adobe.utils.MMExecute;
 
 			import popups.BaddyPopUp;
+			import popups.CannonPopUp;
 			import popups.CloudPopUp;
+			import popups.HeroPopUp;
 			import popups.MovingPlatformPopUp;
+			import popups.TeleporterPopUp;
+			import popups.TreadmillPopUp;
 
 			import mx.controls.Alert;
 			import mx.controls.ToolTip;
@@ -27,7 +31,11 @@
 				switch(evt.target) {
 
 					case addHero:
-						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addHero','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "');");
+						
+						var heroPopUp:HeroPopUp = new HeroPopUp();
+						PopUpManager.addPopUp(heroPopUp, this, true);
+						PopUpManager.centerPopUp(heroPopUp);
+						heroPopUp.addEventListener(Event.COMPLETE, _addHero);
 						break;
 
 					case addBaddy:
@@ -73,9 +81,33 @@
 						PopUpManager.centerPopUp(cPopUp);
 						cPopUp.addEventListener(Event.COMPLETE, _addCloud);
 						break;
+						
+					case addTeleporter:
+					
+						var telePopUp:TeleporterPopUp = new TeleporterPopUp();
+						PopUpManager.addPopUp(telePopUp, this, true);
+						PopUpManager.centerPopUp(telePopUp);
+						telePopUp.addEventListener(Event.COMPLETE, _addTeleporter);
+						break;
+						
+					case addTreadmill:
+						
+						var treadPopUp:TreadmillPopUp = new TreadmillPopUp();
+						PopUpManager.addPopUp(treadPopUp, this, true);
+						PopUpManager.centerPopUp(treadPopUp);
+						treadPopUp.addEventListener(Event.COMPLETE, _addTreadmill);
+						break;
+						
+					case addCannon:
+					
+						var cannonPopUp:CannonPopUp = new CannonPopUp();
+						PopUpManager.addPopUp(cannonPopUp, this, true);
+						PopUpManager.centerPopUp(cannonPopUp);
+						cannonPopUp.addEventListener(Event.COMPLETE, _addCannon);
+						break;
 				}
 				
-				if (evt.target != addBaddy && evt.target != addPlatform && evt.target != addCloud && evt.target != addMovingPlatform) {
+				if (evt.target != addHero && evt.target != addBaddy && evt.target != addPlatform && evt.target != addCloud && evt.target != addMovingPlatform && evt.target != addTeleporter && evt.target != addTreadmill && evt.target != addCannon) {
 					_initFields();
 				}
 			}
@@ -85,6 +117,24 @@
 				orignalClassname.selected = true;
 				instanceName.text = "";
 				_originalClassname();
+			}
+			
+			private function _addHero(evt:Event):void {
+				
+				evt.target.removeEventListener(Event.COMPLETE, _addHero);
+				
+				MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addHero','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "', '" + evt.target.maxVelocity.text.toString() + "', '" + evt.target.jumpHeight.text.toString() + "', '" + evt.target.canDuck.selected.toString() + "');");
+				
+				_initFields();
+			}
+			
+			private function _addBaddy(evt:Event):void {
+				
+				evt.target.removeEventListener(Event.COMPLETE, _addBaddy);
+				
+				MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addBaddy','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "', '" + evt.target.speed.text.toString() + "', '" + evt.target.startingDirection.selected.toString() + "');");
+				
+				_initFields();
 			}
 
 			private function _addSpecifiedPlatform(cEvt:CloseEvent):void {
@@ -116,11 +166,29 @@
 				_initFields();
 			}
 			
-			private function _addBaddy(evt:Event):void {
+			private function _addTeleporter(evt:Event):void {
 				
-				evt.target.removeEventListener(Event.COMPLETE, _addBaddy);
+				evt.target.removeEventListener(Event.COMPLETE, _addTeleporter);
 				
-				MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addBaddy','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "', '" + evt.target.speed.text.toString() + "', '" + evt.target.startingDirection.selected.toString() + "');");
+				MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addTeleporter','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "', '" + evt.target.endX.text.toString() + "', '" + evt.target.endY.text.toString() + "', '" + evt.target.waitingTime.text.toString() + "');");
+				
+				_initFields();
+			}
+			
+			private function _addTreadmill(evt:Event):void {
+				
+				evt.target.removeEventListener(Event.COMPLETE, _addTreadmill);
+				
+				MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addTreadmill','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "', '" + evt.target.speedTread.text.toString() + "', '" + evt.target.startingDirection.selected.toString() + "', '" + evt.target.enableTreadmill.selected.toString() + "', '" + evt.target.enable.selected.toString() + "');");
+				
+				_initFields();
+			}
+			
+			private function _addCannon(evt:Event):void {
+				
+				evt.target.removeEventListener(Event.COMPLETE, _addCannon);
+				
+				MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'addCannon','" + path.text.toString() + "', '" + newClassname.text.toString() + "', '" + instanceName.text.toString() + "', '" + evt.target.fireRate.text.toString() + "', '" + evt.target.startingDirection.selected.toString() + "', '" + evt.target.missileView.text.toString() + "');");
 				
 				_initFields();
 			}
@@ -149,6 +217,18 @@
 
 					case createMissile:
 						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'createMissile');");
+						break;
+						
+					case createCannon:
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'createCannon');");
+						break;
+						
+					case createTeleporter:
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'createTeleporter');");
+						break;
+						
+					case createTreadmill:
+						MMExecute("fl.runScript(fl.configURI + 'Commands/CitrusEnginePanels.jsfl', 'createTreadmill');");
 						break;
 				}
 			}
@@ -210,9 +290,22 @@
 						label="Coin" toolTip="Add a coin to your level"/>
 				</mx:HBox>
 				
-				<mx:Button id="addBackground" width="100%" click="_addObjects(event)"
-					label="Background" toolTip="Add a background to your level"/>
-
+				<mx:HBox width="100%">
+					<mx:Button id="addBackground" width="50%" click="_addObjects(event)"
+						label="Background" toolTip="Add a background to your level"/>
+						
+					<mx:Button id="addTeleporter" width="50%" click="_addObjects(event)"
+						label="Teleporter" toolTip="Add a teleporter to your level"/>
+				</mx:HBox>
+				
+				<mx:HBox width="100%">
+					<mx:Button id="addTreadmill" width="50%" click="_addObjects(event)"
+						label="Treadmill" toolTip="Add a treadmill (extends Moving Platform) to your level"/>
+						
+					<mx:Button id="addCannon" width="50%" click="_addObjects(event)"
+						label="Cannon" toolTip="Add a cannon to your level"/>
+				</mx:HBox>
+				
 				<mx:HBox width="100%">
 					<mx:Label width="30%" text="filepath ?"/>
 					<mx:TextInput width="70%" id="path" toolTip="Enter the path of your file. It can be a blank."/>
@@ -249,7 +342,16 @@
 					label="Baddy" toolTip="Add labels and actions for your baddy"/>
 
 				<mx:Button id="createMissile" width="100%" click="_createFrames(event)"
-					label="Missile" toolTip="Add labels and actions for your missile"/>
+					label="Missile" toolTip="Add labels and actions for a missile"/>
+				
+				<mx:Button id="createCannon" width="100%" click="_createFrames(event)"
+					label="Cannon" toolTip="Add labels and actions for a cannon"/>
+					
+				<mx:Button id="createTeleporter" width="100%" click="_createFrames(event)"
+					label="Teleporter" toolTip="Add labels and actions for a teleporter"/>
+					
+				<mx:Button id="createTreadmill" width="100%" click="_createFrames(event)"
+					label="Treadmill" toolTip="Add labels and actions for a treadmill"/>
 
 			</mx:VBox>
 		</mx:Canvas>

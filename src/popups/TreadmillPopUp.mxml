@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+	width="200" height="175" title="Treadmill options :" horizontalAlign="center">
+
+	<mx:Script>
+		<![CDATA[
+
+			import mx.core.IFlexDisplayObject;
+			import mx.managers.PopUpManager;
+
+			import flash.events.Event;
+
+			private function _valid(e:Event):void {
+				
+				this.dispatchEvent(new Event(Event.COMPLETE));
+				
+				PopUpManager.removePopUp(this as IFlexDisplayObject);
+			}
+		]]>
+	</mx:Script>
+
+	<mx:HBox width="100%">
+		<mx:Label width="50%" text="speed tread :"/>
+		<mx:TextInput id="speedTread" text="3" width="50%" restrict="0-9."/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label width="75%" text="objects move to the right ?"/>
+		<mx:CheckBox id="startingDirection" width="25%"
+			toolTip="untick if objects move to the left on the treadmill"
+			selected="true"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label width="75%" text="enable treadmill ?"/>
+		<mx:CheckBox id="enableTreadmill" width="25%"
+			toolTip="untick if the treadmill is disable"
+			selected="true"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label width="75%" text="enable moving platform ?"/>
+		<mx:CheckBox id="enable" width="25%"
+			toolTip="tick if the treadmill is a moving platform"
+			selected="false"/>
+	</mx:HBox>
+	
+	<mx:Button id="valid" width="50%" click="_valid(event)" label="Ok"/>
+
+</mx:TitleWindow>
